@@ -1,0 +1,35 @@
+Dojos and Ninjas queries:
+
+new_dojo = Dojos.objects.create(name="Great Dojo", city="Dallas", state="TX")
+
+new_dojo = Dojos.objects.create(name="Best Dojo", city="Seattle", state="WA")
+
+another_newone = Dojos.objects.create(name="Amazing Dojo", city="New York", state="NY")
+
+for name in Dojos.objects.all():
+...     print(name.name)
+
+Dojos.objects.all().delete()
+
+dallasninja = Dojos.objects.get(city="Dallas")
+>>> dallas_ninja = Ninjas.objects.create(dojo=dallasninja, first_name="Tim", last_name="Ustica")
+
+dallasninja = Dojos.objects.get(city="Dallas")
+>>> dallas_ninja = Ninjas.objects.create(dojo=dallasninja, first_name="Bob", last_name="Boberts")
+
+dallasninja = Dojos.objects.get(city="Dallas")
+>>> dallas_ninja = Ninjas.objects.create(dojo=dallasninja, first_name="Chuck", last_name="Norris")
+
+seattle_ninja = Ninjas.objects.create(dojo=Dojos.objects.get(city="Seattle"), first_name="Tim", last_name="ustica")
+seattle_ninja = Ninjas.objects.create(dojo=Dojos.objects.get(city="Seattle"), first_name="Bobert", last_name="Fredrick")
+seattle_ninja = Ninjas.objects.create(dojo=Dojos.objects.get(city="Seattle"), first_name="Jamie", last_name="Tilley")
+
+for ninjas in Ninjas.objects.all():
+...     print(ninjas.first_name, ninjas.dojo.name)
+
+ninja_name = Ninjas.objects.filter(dojo=this_dojo)
+ for name in ninja_name:
+...     print(name.first_name, name.last_name)
+
+new_dojo = Dojos.objects.create(name="TheDojo", city="Los Angeles", state="CA", desc="")
+>>> print(new_dojo.name)
