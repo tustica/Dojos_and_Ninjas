@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dojos and Ninjas</title>
+    <link rel="stylesheet" href="static/dnstyle.css">
+</head>
+<body>
+    <section id="grid">
+        <div class="box" id="box1">
+            <h1>Add a Dojo</h1>
+            <form action="/process-dojo" name="add_dojo" id="dojo_form" method="POST">
+                {% csrf_token %}
+                <div>
+                    <label for="dojo_name" class="labels">Name</label>
+                    <input type="text" name="dojo_name" class="inputs">
+                </div>
+                <div>
+                    <label for="dojo_city" class="labels">City</label>
+                    <input type="text" name="dojo_city" class="inputs">
+                </div>
+                <div>
+                    <label for="dojo_state" class="labels">State</label>
+                    <input type="text" name="dojo_state" class="inputs">
+                </div>
+                <button id="dojo_button" value="Add">Add</button>
+            </form>
+        </div>
+        <div class="box" id="box2">
+            <h1>Add a Ninja</h1>
+            <form action="/process-ninja" name="add_ninja" id="ninja_form" method="POST">
+                {% csrf_token %}
+                <div>
+                    <label for="dojo_name" class="labels">Name</label>
+                    <input type="text" name="first_name" class="inputs">
+                </div>
+                <div>
+                    <label for="dojo_city" class="labels">City</label>
+                    <input type="text" name="last_name" class="inputs">
+                    </div>
+                    <div>
+                    <label for="dojo_name" class="labels">Dojo</label>
+                    <select name="dojo_select" id="ninja_dojo_name">
+                        {% for dojo in all_dojos %}
+                            <option value="{{dojo.id}}">{{dojo.dojo_name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button id="ninja_button" value="Add">Add</button>
+            </form>
+        </div>
+        <div class="box" id="box3"> 
+                <h1>All the Dojos</h1>
+                {% for dojo in all_dojos %}
+                    <form action="/delete-dojo" method="POST" id="delete_dojo">
+                        {% csrf_token %}
+                        <h3>{{dojo.dojo_name}}</h3>
+                        <button id="delete_dojo_button" name="dojo_delete" value="{{dojo.id}}">Delete Dojo</button>
+                    </form>
+                    <ul>
+                    {% for ninja in all_ninjas %}
+                        {% if ninja.dojo.dojo_name == dojo.dojo_name %}
+                            <li>{{ninja.first_name}}</li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+                {% endfor %}
+        </div>
+    </section>
+</body>
+</html>
